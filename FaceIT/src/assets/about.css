@@ -1,0 +1,28 @@
+/* PAGE LAYOUT */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* CONTENT SECTION */
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.about-container h1 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+
+.about-container p {
+    line-height: 1.7;
+    font-size: 16px;
+    color: #555;
+}

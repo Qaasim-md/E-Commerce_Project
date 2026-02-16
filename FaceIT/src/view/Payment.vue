@@ -1,5 +1,12 @@
 <template>
-<div class="products-container">
+<div>
+<head>
+    <meta charset="UTF-8">
+    <title>FACE I.T | Products</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="products.css">
+</head>
+<body>
 <nav class="navbar">
     <div class="logo">TechTrend</div>
     <ul class="nav-links">
@@ -52,6 +59,7 @@ function addToCart(name, price) {
 
 </script>
 
+</body>
 </div>
 </template>
 
