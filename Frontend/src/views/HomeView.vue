@@ -2,7 +2,7 @@
   <div class="page">
     <AppNavbar />
 
-    <!-- ── HERO ── -->
+    <!-- -- HERO -- -->
     <section class="hero">
       <div class="hero-bg">
         <div class="bg-petal bp-1"></div>
@@ -23,7 +23,7 @@
             <span class="title-accent">Your Skin.</span>
           </h1>
           <p class="hero-sub">
-            Intelligent skin analysis that pinpoints your unique needs —
+            Intelligent skin analysis that pinpoints your unique needs -
             backed by AI and precision-personalised to you.
           </p>
           <div class="hero-ctas">
@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <!-- RIGHT: Scanner visual — properly centred -->
+        <!-- RIGHT: Scanner visual - properly centred -->
         <div class="hero-visual">
           <div class="face-frame">
             <div class="ring ring-1"></div>
@@ -140,7 +140,7 @@ import AppFooter from '../components/Appfooter.vue'
 
 .page { background: #fdf8f3; min-height: 100vh; }
 
-/* ── HERO ── */
+/* -- HERO -- */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -181,7 +181,7 @@ import AppFooter from '../components/Appfooter.vue'
   background-size: 44px 44px;
 }
 
-/* ── INNER LAYOUT ── */
+/* -- INNER LAYOUT -- */
 .hero-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -195,7 +195,7 @@ import AppFooter from '../components/Appfooter.vue'
   z-index: 1;
 }
 
-/* ── LEFT: Content ── */
+/* -- LEFT: Content -- */
 .hero-content {
   animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) both;
 }
@@ -262,7 +262,7 @@ import AppFooter from '../components/Appfooter.vue'
 }
 .stat-div { width: 1px; height: 40px; background: rgba(45,31,20,0.12); }
 
-/* ── RIGHT: Scanner visual — centred in its column ── */
+/* -- RIGHT: Scanner visual - centred in its column -- */
 .hero-visual {
   display: flex;
   align-items: center;
@@ -344,14 +344,14 @@ import AppFooter from '../components/Appfooter.vue'
 .ftag-dot.green  { background: #5aaa40; box-shadow: 0 0 8px rgba(90,170,64,0.5); }
 .ftag-dot.rose   { background: #d4726a; box-shadow: 0 0 8px rgba(212,114,106,0.5); }
 
-/* Tag positioning — offset outside the card */
+/* Tag positioning - offset outside the card */
 .ftag-1 { top: 70px;  left: -10px;  animation-delay: 0s; }
 .ftag-2 { top: 200px; right: -10px; animation-delay: 0.8s; }
 .ftag-3 { bottom: 80px; left: -10px; animation-delay: 1.6s; }
 
 @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-/* ── SCROLL HINT ── */
+/* -- SCROLL HINT -- */
 .scroll-hint {
   position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -370,7 +370,7 @@ import AppFooter from '../components/Appfooter.vue'
 }
 @keyframes scrollDot { 0%{top:5px;opacity:1} 100%{top:18px;opacity:0} }
 
-/* ── RESPONSIVE ── */
+/* -- RESPONSIVE -- */
 @media (max-width: 1024px) {
   .hero-inner {
     grid-template-columns: 1fr;

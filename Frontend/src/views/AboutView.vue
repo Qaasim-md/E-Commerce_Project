@@ -11,7 +11,7 @@
       <div class="about-hero-inner">
         <span class="page-label">Who We Are</span>
         <h1 class="page-title">Built for your<br/><span class="accent">skin's truth.</span></h1>
-        <p class="page-sub">Face.IT is a company driven by one goal — helping people reach their true beauty through the power of AI and data.</p>
+        <p class="page-sub">Face.IT is a company driven by one goal - helping people reach their true beauty through the power of AI and data.</p>
       </div>
     </section>
 
@@ -21,7 +21,7 @@
         <div class="text-block">
           <span class="section-label">Our Mission</span>
           <h2>We are focused on optimal and precise skincare solutions.</h2>
-          <p>Generic skincare advice is outdated. Your skin is unique — it deserves a unique approach. We built Decode to give every person access to the same level of precision skincare analysis that was previously only available to dermatologists.</p>
+          <p>Generic skincare advice is outdated. Your skin is unique - it deserves a unique approach. We built Decode to give every person access to the same level of precision skincare analysis that was previously only available to dermatologists.</p>
           <p>Our AI analyses thousands of data points from a single scan, delivering personalised insights you can act on immediately.</p>
         </div>
         <div class="visual-block">
@@ -58,14 +58,14 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
             </div>
             <h3>Precision</h3>
-            <p>Every recommendation is generated from real skin data — not generalised skin type guesses.</p>
+            <p>Every recommendation is generated from real skin data - not generalised skin type guesses.</p>
           </div>
           <div class="value-card value-card-warm">
             <div class="value-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             </div>
             <h3>Inclusivity</h3>
-            <p>Doesn't matter your age or skin type — our product helps all that seek it.</p>
+            <p>Doesn't matter your age or skin type - our product helps all that seek it.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">

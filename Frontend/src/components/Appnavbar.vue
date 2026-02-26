@@ -3,7 +3,7 @@
     <div class="nav-inner">
       <!-- Logo -->
       <router-link to="/" class="logo">
-        <span class="logo-petal">✿</span>
+        <span class="logo-petal">*</span>
         <span class="logo-text">FACE<span class="logo-accent">.IT</span></span>
       </router-link>
 
@@ -55,7 +55,7 @@
         <router-link to="/brands#scanners" class="mob-link cultivate" @click="menuOpen = false">Cultivate Your Own</router-link>
         <div class="mob-divider"></div>
         <template v-if="user">
-          <router-link to="/cart" class="mob-link" @click="menuOpen = false">🛍 Cart{{ cartCount > 0 ? ` (${cartCount})` : '' }}</router-link>
+          <router-link to="/cart" class="mob-link" @click="menuOpen = false">Cart{{ cartCount > 0 ? ` (${cartCount})` : '' }}</router-link>
           <button class="mob-ghost" @click="logout">Sign Out</button>
         </template>
         <template v-else>

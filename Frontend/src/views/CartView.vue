@@ -15,12 +15,12 @@
         <!-- Loading -->
         <div v-if="loading" class="empty-state">
           <div class="spinner"></div>
-          <p>Loading your cart…</p>
+          <p>Loading your cart...</p>
         </div>
 
         <!-- Not logged in -->
         <div v-else-if="!user" class="empty-state">
-          <div class="empty-icon">🔒</div>
+          <div class="empty-icon"></div>
           <h3>You're not signed in</h3>
           <p>Please sign in to view your cart.</p>
           <router-link to="/login" class="cta-btn">Sign In</router-link>
@@ -28,7 +28,7 @@
 
         <!-- Empty cart -->
         <div v-else-if="items.length === 0" class="empty-state">
-          <div class="empty-icon">🛍</div>
+          <div class="empty-icon"></div>
           <h3>Your bag is empty</h3>
           <p>Discover products that your skin will love.</p>
           <router-link to="/brands" class="cta-btn">Shop Now</router-link>
@@ -41,7 +41,7 @@
               <div class="item-image">
                 <img v-if="item.image_url" :src="item.image_url" :alt="item.name" />
                 <div v-else class="item-img-placeholder">
-                  <span>✿</span>
+                  <span>*</span>
                 </div>
               </div>
               <div class="item-info">
@@ -51,7 +51,7 @@
               </div>
               <div class="item-controls">
                 <div class="qty-row">
-                  <button class="qty-btn" @click="changeQty(item, item.quantity - 1)" :disabled="item.quantity <= 1">−</button>
+                  <button class="qty-btn" @click="changeQty(item, item.quantity - 1)" :disabled="item.quantity <= 1"></button>
                   <span class="qty-val">{{ item.quantity }}</span>
                   <button class="qty-btn" @click="changeQty(item, item.quantity + 1)">+</button>
                 </div>
@@ -67,7 +67,7 @@
           <div class="cart-summary">
             <h2 class="summary-title">Order Summary</h2>
             <div class="summary-row" v-for="item in items" :key="item.id + '-s'">
-              <span>{{ item.name }} × {{ item.quantity }}</span>
+              <span>{{ item.name }}  {{ item.quantity }}</span>
               <span>R {{ Number(item.subtotal).toFixed(2) }}</span>
             </div>
             <div class="summary-divider"></div>
@@ -76,7 +76,7 @@
               <span>R {{ cartTotal }}</span>
             </div>
             <router-link to="/checkout" class="checkout-btn">Proceed to Checkout</router-link>
-            <router-link to="/brands" class="continue-link">← Continue Shopping</router-link>
+            <router-link to="/brands" class="continue-link"> Continue Shopping</router-link>
           </div>
         </div>
 
@@ -264,3 +264,4 @@ onMounted(() => {
 @media (max-width: 900px) { .cart-layout { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .cart-item { grid-template-columns: 70px 1fr; } .item-controls { grid-column: 1/-1; flex-direction: row; justify-content: space-between; } }
 </style>
+

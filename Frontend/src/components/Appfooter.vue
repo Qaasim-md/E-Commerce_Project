@@ -5,7 +5,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="logo">
-          <span class="logo-petal">✿</span>
+          <span class="logo-petal">*</span>
           <span class="logo-text">FACE<span class="logo-accent">.IT</span></span>
         </div>
         <p class="footer-tagline">AI-powered skincare intelligence.<br/>Built for every skin type.</p>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Face.IT. All rights reserved.</span>
+      <span>(c) 2026 Face.IT. All rights reserved.</span>
       <span class="footer-status">
         <span class="status-dot"></span> All systems operational
       </span>

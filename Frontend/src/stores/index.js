@@ -1,15 +1,15 @@
 import { createStore } from 'vuex';
 const store = createStore({
-    // Your Vuex store configuration
-    state:{
+    // Your Vuex store configuration
+    state:{
 
-    },
-    mutations:{
+    },
+    mutations:{
 
-    },
-    actions:{
+    },
+    actions:{
 
-    }
+    }
 });
 
 export default store

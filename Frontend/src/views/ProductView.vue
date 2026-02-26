@@ -111,7 +111,7 @@
     <section class="cta-strip">
       <div class="cta-strip-inner">
         <h2>One scan changes everything.</h2>
-        <p>Start your personalised skin journey today — no guesswork required.</p>
+        <p>Start your personalised skin journey today - no guesswork required.</p>
         <router-link to="/login" class="cta-btn">Decode Your Skin</router-link>
       </div>
     </section>

@@ -4,7 +4,7 @@
 
     <section class="checkout-hero">
       <div class="hero-inner">
-        <span class="page-label">Almost there ✿</span>
+        <span class="page-label">Almost there *</span>
         <h1 class="page-title">Checkout</h1>
       </div>
     </section>
@@ -14,21 +14,21 @@
 
         <!-- Not logged in -->
         <div v-if="!user" class="empty-state">
-          <div class="empty-icon">🔒</div>
+          <div class="empty-icon"></div>
           <h3>Please sign in first</h3>
           <router-link to="/login" class="cta-btn">Sign In</router-link>
         </div>
 
         <!-- Empty cart -->
         <div v-else-if="!loading && items.length === 0" class="empty-state">
-          <div class="empty-icon">🛍</div>
+          <div class="empty-icon"></div>
           <h3>Your cart is empty</h3>
           <router-link to="/brands" class="cta-btn">Shop Now</router-link>
         </div>
 
         <!-- Success screen -->
         <div v-else-if="orderPlaced" class="success-screen">
-          <div class="success-icon">✿</div>
+          <div class="success-icon">*</div>
           <h2>Order Placed!</h2>
           <p>Thank you, {{ user.full_name.split(' ')[0] }}. Your skin journey continues.</p>
           <p class="order-ref">Order ref: <strong>{{ orderRef }}</strong></p>
@@ -89,7 +89,7 @@
                     <span class="pm-label">{{ pm.label }}</span>
                     <span class="pm-desc">{{ pm.desc }}</span>
                   </div>
-                  <span class="pm-check" v-if="paymentMethod === pm.value">✓</span>
+                  <span class="pm-check" v-if="paymentMethod === pm.value"></span>
                 </label>
               </div>
 
@@ -113,7 +113,7 @@
                   <label>Name on Card</label>
                   <input v-model="card.name" type="text" placeholder="Jane Doe" />
                 </div>
-                <p class="sim-note">✿ This is a simulated payment — no real charges will be made.</p>
+                <p class="sim-note">* This is a simulated payment - no real charges will be made.</p>
               </div>
 
               <div v-if="paymentMethod === 'eft'" class="eft-info">
@@ -132,7 +132,7 @@
             <div v-if="loading" class="spinner"></div>
             <div class="summary-items" v-else>
               <div class="summary-item" v-for="item in items" :key="item.id">
-                <span class="si-name">{{ item.name }} <span class="si-qty">× {{ item.quantity }}</span></span>
+                <span class="si-name">{{ item.name }} <span class="si-qty"> {{ item.quantity }}</span></span>
                 <span class="si-price">R {{ Number(item.subtotal).toFixed(2) }}</span>
               </div>
             </div>
@@ -156,7 +156,7 @@
               <span v-if="!placing">Place Order</span>
               <span v-else class="btn-spinner"></span>
             </button>
-            <router-link to="/cart" class="back-link">← Edit Cart</router-link>
+            <router-link to="/cart" class="back-link"> Edit Cart</router-link>
           </div>
         </div>
       </div>
@@ -187,9 +187,9 @@ const paymentMethod = ref('card')
 const card = reactive({ number: '', expiry: '', cvv: '', name: '' })
 
 const paymentMethods = [
-  { value: 'card', icon: '💳', label: 'Card', desc: 'Visa, Mastercard, Amex (simulated)' },
-  { value: 'eft', icon: '🏦', label: 'EFT / Bank Transfer', desc: 'Direct bank transfer' },
-  { value: 'cod', icon: '💵', label: 'Cash on Delivery', desc: 'Pay when it arrives' },
+  { value: 'card', icon: '', label: 'Card', desc: 'Visa, Mastercard, Amex (simulated)' },
+  { value: 'eft', icon: '', label: 'EFT / Bank Transfer', desc: 'Direct bank transfer' },
+  { value: 'cod', icon: '', label: 'Cash on Delivery', desc: 'Pay when it arrives' },
 ]
 
 const cartTotal = computed(() =>
@@ -371,3 +371,4 @@ onMounted(() => {
 @media (max-width: 900px) { .checkout-layout { grid-template-columns: 1fr; } .order-summary { position: static; } }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
 </style>
+

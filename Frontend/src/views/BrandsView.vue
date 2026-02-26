@@ -2,7 +2,7 @@
   <div class="page">
     <AppNavbar />
 
-    <!-- ── HERO ── -->
+    <!-- -- HERO -- -->
     <section class="brands-hero">
       <div class="hero-bg">
         <div class="bg-petal bp-1"></div>
@@ -12,11 +12,11 @@
       <div class="brands-hero-inner">
         <span class="page-label">Partners & Products</span>
         <h1 class="page-title">Brands that<br/><span class="accent">trust the scan.</span></h1>
-        <p class="page-sub">Face.IT partners with world-leading skincare brands to bring you the most trusted products — matched to your skin by AI.</p>
+        <p class="page-sub">Face.IT partners with world-leading skincare brands to bring you the most trusted products - matched to your skin by AI.</p>
       </div>
     </section>
 
-    <!-- ── PARTNER BRANDS ── -->
+    <!-- -- PARTNER BRANDS -- -->
     <section class="section">
       <div class="section-inner">
         <div class="section-header">
@@ -48,13 +48,13 @@
       </div>
     </section>
 
-    <!-- ── SCANNERS ── -->
+    <!-- -- SCANNERS -- -->
     <section id="scanners" class="section alt">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-label">Our Hardware</span>
           <h2>Three scanners. Every skin need.</h2>
-          <p>Face.IT offers three precision skin scanning devices — each built for a different use case, all powered by the same AI core.</p>
+          <p>Face.IT offers three precision skin scanning devices - each built for a different use case, all powered by the same AI core.</p>
         </div>
         <div class="scanner-grid">
           <div class="scanner-card" v-for="scanner in scanners" :key="scanner.name">
@@ -103,13 +103,13 @@
       </div>
     </section>
 
-    <!-- ── FACE.IT OWN PRODUCTS ── -->
+    <!-- -- FACE.IT OWN PRODUCTS -- -->
     <section class="section">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-label">Face.IT Range</span>
           <h2>Our own products.<br/><span class="accent">Formulated from your data.</span></h2>
-          <p>Beyond our partner brands, Face.IT offers our own clinically-informed product line — every formula shaped by real scan data from thousands of skin profiles.</p>
+          <p>Beyond our partner brands, Face.IT offers our own clinically-informed product line - every formula shaped by real scan data from thousands of skin profiles.</p>
         </div>
         <div class="products-grid">
           <div class="product-card" v-for="product in ownProducts" :key="product.name">
@@ -138,7 +138,7 @@
       </div>
     </section>
 
-    <!-- ── CTA ── -->
+    <!-- -- CTA -- -->
     <section class="cta-strip">
       <div class="cta-strip-inner">
         <h2>Find what your<br/><span class="accent-light">skin actually needs.</span></h2>
@@ -162,7 +162,7 @@ const brands = [
     colorClass: 'ordinary',
     featured: false,
     tagline: 'Clinical formulations with integrity.',
-    desc: 'Known for its no-nonsense, science-first approach to skincare. Face.IT integrates their targeted actives — retinols, acids, peptides — directly into your AI-generated routine.',
+    desc: 'Known for its no-nonsense, science-first approach to skincare. Face.IT integrates their targeted actives - retinols, acids, peptides - directly into your AI-generated routine.',
     tags: ['Serums', 'Actives', 'Retinoids', 'Peeling Solutions'],
   },
   {
@@ -201,7 +201,7 @@ const scanners = [
     tierClass: 'tier-pro',
     glowClass: 'glow-pro',
     price: 'R 3,299',
-    desc: 'Our flagship device. UV damage detection, aging analysis, and full personalised routine builder — all in one scan.',
+    desc: 'Our flagship device. UV damage detection, aging analysis, and full personalised routine builder - all in one scan.',
     specs: ['All Lite features', 'UV & aging detection', 'Tone & texture analysis', 'Routine builder AI', 'Cloud skin history'],
   },
   {

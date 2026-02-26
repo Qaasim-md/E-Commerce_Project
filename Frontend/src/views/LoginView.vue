@@ -11,7 +11,7 @@
 
     <div class="auth-container">
       <router-link to="/" class="brand">
-        <span class="brand-petal">✿</span>
+        <span class="brand-petal">*</span>
         <span class="brand-name">FACE<span class="brand-accent">.IT</span></span>
       </router-link>
 
@@ -46,7 +46,7 @@
               <label>Phone <span class="optional">(optional)</span></label>
               <div class="input-wrap phone-wrap">
                 <div class="phone-prefix">
-                  <span class="za-flag">🇿🇦</span>
+                  <span class="za-flag">ZA</span>
                   <span class="za-code">+27</span>
                 </div>
                 <input v-model="form.phone" type="tel" placeholder="81 234 5678" maxlength="12" @input="formatZAPhone" class="phone-input" />
@@ -58,7 +58,7 @@
               <label>Password</label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <input v-model="form.password" :type="showPass ? 'text' : 'password'" placeholder="••••••••" required />
+                <input v-model="form.password" :type="showPass ? 'text' : 'password'" placeholder="********" required />
                 <button type="button" class="eye-btn" @click="showPass = !showPass">
                   <svg v-if="!showPass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -141,7 +141,7 @@ async function handleSubmit() {
         phone: form.phone ? '+27' + form.phone.replace(/\s/g, '') : undefined,
       })
       msgType.value = 'success'
-      message.value = 'Account created! Signing you in…'
+      message.value = 'Account created! Signing you in...'
       setTimeout(() => switchMode('login'), 1500)
     }
   } catch (err) {
