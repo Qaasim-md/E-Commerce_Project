@@ -93,11 +93,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import http from '../config/http'
 import AppNavbar from '../components/Appnavbar.vue'
 import AppFooter from '../components/Appfooter.vue'
-
-const API_BASE = 'http://localhost:5000/api'
+import { getUser } from '../utils/auth'
 
 const user = ref(null)
 const items = ref([])
@@ -111,7 +110,7 @@ const cartTotal = computed(() =>
 async function fetchCart() {
   if (!user.value) { loading.value = false; return }
   try {
-    const res = await axios.get(`${API_BASE}/carts/${user.value.id}`)
+    const res = await http.get(`/carts/${user.value.id}`)
     items.value = res.data
   } catch (err) {
     error.value = 'Could not load cart. Please try again.'
@@ -124,7 +123,7 @@ async function fetchCart() {
 async function changeQty(item, newQty) {
   if (newQty < 1) return
   try {
-    await axios.patch(`${API_BASE}/carts/${user.value.id}/item/${item.id}`, { quantity: newQty })
+    await http.patch(`/carts/${user.value.id}/item/${item.id}`, { quantity: newQty })
     item.quantity = newQty
     item.subtotal = (item.price * newQty).toFixed(2)
     window.dispatchEvent(new Event('user-updated')) // refresh navbar badge
@@ -136,7 +135,7 @@ async function changeQty(item, newQty) {
 
 async function removeItem(item) {
   try {
-    await axios.delete(`${API_BASE}/carts/${user.value.id}/item/${item.id}`)
+    await http.delete(`/carts/${user.value.id}/item/${item.id}`)
     items.value = items.value.filter(i => i.id !== item.id)
     window.dispatchEvent(new Event('user-updated'))
   } catch {
@@ -146,8 +145,7 @@ async function removeItem(item) {
 }
 
 onMounted(() => {
-  const stored = localStorage.getItem('user')
-  if (stored) user.value = JSON.parse(stored)
+  user.value = getUser()
   fetchCart()
 })
 </script>

@@ -31,6 +31,17 @@ npm install
 npm run dev
 ```
 
+### Backend link setup
+
+Create `Frontend/.env` with:
+
+```sh
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+Point this to your deployed backend URL when needed, for example:
+`https://your-backend-domain/api`.
+
 ### Compile and Minify for Production
 
 ```sh

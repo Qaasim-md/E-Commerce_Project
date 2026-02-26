@@ -91,9 +91,9 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import http from '../config/http'
+import { setSession } from '../utils/auth'
 
-const API_BASE = 'http://localhost:5000/api'
 const router = useRouter()
 
 const mode = ref('login')
@@ -124,17 +124,16 @@ async function handleSubmit() {
   loading.value = true; message.value = ''
   try {
     if (mode.value === 'login') {
-      const res = await axios.post(`${API_BASE}/users/login`, {
+      const res = await http.post('/users/login', {
         email: form.email, password: form.password,
       })
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('user', JSON.stringify(res.data.user))
+      setSession(res.data.token, res.data.user)
       // Notify navbar in the same tab
       window.dispatchEvent(new Event('user-updated'))
       // Redirect home
       router.push('/')
     } else {
-      await axios.post(`${API_BASE}/users`, {
+      await http.post('/users', {
         full_name: form.full_name,
         email: form.email,
         password: form.password,

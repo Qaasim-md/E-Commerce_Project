@@ -70,9 +70,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import http from '../config/http'
+import { clearSession, getUser } from '../utils/auth'
 
-const API_BASE = 'http://localhost:5000/api'
 const router = useRouter()
 
 const scrolled = ref(false)
@@ -83,17 +83,18 @@ const cartCount = ref(0)
 const firstName = computed(() => user.value?.full_name?.split(' ')[0] || '')
 
 function loadUser() {
-  const stored = localStorage.getItem('user')
-  if (stored) {
-    user.value = JSON.parse(stored)
+  user.value = getUser()
+  if (user.value) {
     fetchCartCount()
+  } else {
+    cartCount.value = 0
   }
 }
 
 async function fetchCartCount() {
   if (!user.value) return
   try {
-    const res = await axios.get(`${API_BASE}/carts/${user.value.id}`)
+    const res = await http.get(`/carts/${user.value.id}`)
     cartCount.value = res.data.reduce((sum, item) => sum + item.quantity, 0)
   } catch {
     cartCount.value = 0
@@ -101,8 +102,7 @@ async function fetchCartCount() {
 }
 
 function logout() {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
+  clearSession()
   user.value = null
   cartCount.value = 0
   menuOpen.value = false
