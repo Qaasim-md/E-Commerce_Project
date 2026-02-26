@@ -14,6 +14,7 @@
         <router-link to="/product" class="nav-link" active-class="active">Product</router-link>
         <router-link to="/brands" class="nav-link" active-class="active">Brands</router-link>
         <router-link to="/brands#scanners" class="nav-link cultivate" active-class="active">Cultivate Your Own</router-link>
+        <router-link to="/contact" class="nav-link" active-class="active">Contact Us</router-link>
       </div>
 
       <!-- Desktop actions -->
@@ -53,6 +54,7 @@
         <router-link to="/product" class="mob-link" @click="menuOpen = false">Product</router-link>
         <router-link to="/brands" class="mob-link" @click="menuOpen = false">Brands</router-link>
         <router-link to="/brands#scanners" class="mob-link cultivate" @click="menuOpen = false">Cultivate Your Own</router-link>
+        <router-link to="/contact" class="mob-link" @click="menuOpen = false">Contact Us</router-link>
         <div class="mob-divider"></div>
         <template v-if="user">
           <router-link to="/cart" class="mob-link" @click="menuOpen = false">🛍 Cart{{ cartCount > 0 ? ` (${cartCount})` : '' }}</router-link>
@@ -70,9 +72,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import http from '../config/http'
-import { clearSession, getUser } from '../utils/auth'
+import axios from 'axios'
 
+const API_BASE = 'http://localhost:5000/api'
 const router = useRouter()
 
 const scrolled = ref(false)
@@ -83,18 +85,17 @@ const cartCount = ref(0)
 const firstName = computed(() => user.value?.full_name?.split(' ')[0] || '')
 
 function loadUser() {
-  user.value = getUser()
-  if (user.value) {
+  const stored = localStorage.getItem('user')
+  if (stored) {
+    user.value = JSON.parse(stored)
     fetchCartCount()
-  } else {
-    cartCount.value = 0
   }
 }
 
 async function fetchCartCount() {
   if (!user.value) return
   try {
-    const res = await http.get(`/carts/${user.value.id}`)
+    const res = await axios.get(`${API_BASE}/carts/${user.value.id}`)
     cartCount.value = res.data.reduce((sum, item) => sum + item.quantity, 0)
   } catch {
     cartCount.value = 0
@@ -102,7 +103,8 @@ async function fetchCartCount() {
 }
 
 function logout() {
-  clearSession()
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
   user.value = null
   cartCount.value = 0
   menuOpen.value = false

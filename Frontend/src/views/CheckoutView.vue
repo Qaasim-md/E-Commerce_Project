@@ -11,11 +11,6 @@
 
     <section class="checkout-section">
       <div class="checkout-inner">
-        <div v-if="paymentState" :class="['payment-banner', paymentState]">
-          <span v-if="paymentState === 'success'">Ozow payment successful.</span>
-          <span v-else-if="paymentState === 'cancelled'">Ozow payment was cancelled.</span>
-          <span v-else>Ozow payment failed. Please try again.</span>
-        </div>
 
         <!-- Not logged in -->
         <div v-if="!user" class="empty-state">
@@ -125,10 +120,6 @@
                 <p>Banking details will be emailed to you after placing the order. Please use your order number as reference.</p>
               </div>
 
-              <div v-if="paymentMethod === 'ozow'" class="eft-info">
-                <p>You will be redirected to Ozow to complete secure instant EFT payment.</p>
-              </div>
-
               <div v-if="paymentMethod === 'cod'" class="eft-info">
                 <p>Pay in cash when your order arrives. Available for selected areas in South Africa.</p>
               </div>
@@ -177,14 +168,12 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import http from '../config/http'
+import axios from 'axios'
 import AppNavbar from '../components/Appnavbar.vue'
 import AppFooter from '../components/Appfooter.vue'
-import { getUser } from '../utils/auth'
 
-const route = useRoute()
-const router = useRouter()
+const API_BASE = 'http://localhost:5000/api'
+
 const user = ref(null)
 const items = ref([])
 const loading = ref(true)
@@ -192,7 +181,6 @@ const placing = ref(false)
 const orderPlaced = ref(false)
 const orderRef = ref('')
 const formError = ref('')
-const paymentState = ref('')
 
 const shipping = reactive({ street: '', city: '', postal_code: '', country: 'ZA' })
 const paymentMethod = ref('card')
@@ -201,7 +189,6 @@ const card = reactive({ number: '', expiry: '', cvv: '', name: '' })
 const paymentMethods = [
   { value: 'card', icon: '💳', label: 'Card', desc: 'Visa, Mastercard, Amex (simulated)' },
   { value: 'eft', icon: '🏦', label: 'EFT / Bank Transfer', desc: 'Direct bank transfer' },
-  { value: 'ozow', icon: 'OZ', label: 'Ozow', desc: 'Secure instant EFT via Ozow' },
   { value: 'cod', icon: '💵', label: 'Cash on Delivery', desc: 'Pay when it arrives' },
 ]
 
@@ -221,7 +208,7 @@ function formatExpiry(e) {
 async function fetchCart() {
   if (!user.value) { loading.value = false; return }
   try {
-    const res = await http.get(`/carts/${user.value.id}`)
+    const res = await axios.get(`${API_BASE}/carts/${user.value.id}`)
     items.value = res.data
   } catch { /* ignore */ } finally { loading.value = false }
 }
@@ -233,32 +220,6 @@ async function placeOrder() {
   }
   placing.value = true; formError.value = ''
   try {
-    if (paymentMethod.value === 'ozow') {
-      const amount = Number(cartTotal.value)
-      const ozowRes = await http.post('/payment/ozow/initiate', {
-        amount,
-        transaction_reference: `ORD-${Date.now()}`,
-        bank_reference: `FACEIT-${user.value.id}-${Date.now()}`,
-      })
-
-      const { checkoutUrl, payload } = ozowRes.data
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = checkoutUrl
-
-      Object.entries(payload).forEach(([key, value]) => {
-        const input = document.createElement('input')
-        input.type = 'hidden'
-        input.name = key
-        input.value = String(value)
-        form.appendChild(input)
-      })
-
-      document.body.appendChild(form)
-      form.submit()
-      return
-    }
-
     const payload = {
       user_id: user.value.id,
       items: items.value.map(i => ({ product_id: i.product_id, quantity: i.quantity, unit_price: i.price, product_name: i.name })),
@@ -266,7 +227,7 @@ async function placeOrder() {
       payment_method: paymentMethod.value,
       total_amount: cartTotal.value,
     }
-    const res = await http.post('/orders', payload)
+    const res = await axios.post(`${API_BASE}/orders`, payload)
     orderRef.value = res.data.order_number || 'ORD-' + Date.now()
     orderPlaced.value = true
     // Clear cart items in state
@@ -279,27 +240,9 @@ async function placeOrder() {
 }
 
 onMounted(() => {
-  const payment = route.query.payment
-  const txRef = route.query.txRef
-  if (payment === 'success') {
-    paymentState.value = 'success'
-    orderPlaced.value = true
-    orderRef.value = txRef ? String(txRef) : `ORD-${Date.now()}`
-  } else if (payment === 'cancelled') {
-    paymentState.value = 'cancelled'
-  } else if (payment === 'error') {
-    paymentState.value = 'error'
-  }
-
-  user.value = getUser()
+  const stored = localStorage.getItem('user')
+  if (stored) user.value = JSON.parse(stored)
   fetchCart()
-
-  if (payment) {
-    const cleanedQuery = { ...route.query }
-    delete cleanedQuery.payment
-    delete cleanedQuery.txRef
-    router.replace({ query: cleanedQuery })
-  }
 })
 </script>
 
@@ -321,29 +264,6 @@ onMounted(() => {
 /* Section */
 .checkout-section { padding: 60px 5% 100px; }
 .checkout-inner { max-width: 1200px; margin: 0 auto; }
-.payment-banner {
-  margin-bottom: 20px;
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-.payment-banner.success {
-  background: rgba(90, 170, 64, 0.12);
-  color: #3f7f2c;
-  border: 1px solid rgba(90, 170, 64, 0.35);
-}
-.payment-banner.cancelled {
-  background: rgba(196, 120, 74, 0.12);
-  color: #a05535;
-  border: 1px solid rgba(196, 120, 74, 0.35);
-}
-.payment-banner.error {
-  background: rgba(200, 74, 74, 0.1);
-  color: #c84a4a;
-  border: 1px solid rgba(200, 74, 74, 0.3);
-}
 
 /* Layout */
 .checkout-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }

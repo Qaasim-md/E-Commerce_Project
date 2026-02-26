@@ -6,7 +6,7 @@ import BrandsView from '../views/BrandsView.vue'
 import LoginView from '../views/LoginView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
-import { isAuthenticated } from '../utils/auth'
+import ContactView from '../views/Contactview.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,31 +17,20 @@ const router = createRouter({
     { path: '/brands', name: 'brands', component: BrandsView },
     { path: '/login', name: 'login', component: LoginView },
     {
-      path: '/cart',
-      name: 'cart',
-      component: CartView,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/checkout',
-      name: 'checkout',
-      component: CheckoutView,
-      meta: { requiresAuth: true },
-    },
+  path: '/cart',
+  name: 'cart',
+  component: CartView,
+},
+{
+  path: '/checkout',
+  name: 'checkout',
+  component: CheckoutView,
+},
+{ path: '/contact', name: 'contact', component: ContactView },
   ],
   scrollBehavior() {
     return { top: 0 }
   },
-})
-
-router.beforeEach((to) => {
-  if (to.meta.requiresAuth && !isAuthenticated()) {
-    return { name: 'login' }
-  }
-  if (to.name === 'login' && isAuthenticated()) {
-    return { name: 'home' }
-  }
-  return true
 })
 
 export default router
