@@ -6,7 +6,9 @@ import BrandsView from '../views/BrandsView.vue'
 import LoginView from '../views/LoginView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
-import ContactView from '../views/Contactview.vue'
+import ContactView from '../views/ContactView.vue'
+import ManagementView from '../views/ManagementView.vue'
+import { isManagementAuthenticated } from '../utils/managementAuth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,10 +29,23 @@ const router = createRouter({
   component: CheckoutView,
 },
 { path: '/contact', name: 'contact', component: ContactView },
+{
+  path: '/management',
+  name: 'management',
+  component: ManagementView,
+  meta: { requiresManagement: true },
+},
   ],
   scrollBehavior() {
     return { top: 0 }
   },
+})
+
+router.beforeEach((to) => {
+  if (to.meta.requiresManagement && !isManagementAuthenticated()) {
+    return { name: 'login' }
+  }
+  return true
 })
 
 export default router

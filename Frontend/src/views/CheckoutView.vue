@@ -120,6 +120,10 @@
                 <p>Banking details will be emailed to you after placing the order. Please use your order number as reference.</p>
               </div>
 
+              <div v-if="paymentMethod === 'ozow'" class="eft-info">
+                <p>You will be redirected to Ozow to complete payment securely.</p>
+              </div>
+
               <div v-if="paymentMethod === 'cod'" class="eft-info">
                 <p>Pay in cash when your order arrives. Available for selected areas in South Africa.</p>
               </div>
@@ -189,6 +193,7 @@ const card = reactive({ number: '', expiry: '', cvv: '', name: '' })
 const paymentMethods = [
   { value: 'card', icon: '💳', label: 'Card', desc: 'Visa, Mastercard, Amex (simulated)' },
   { value: 'eft', icon: '🏦', label: 'EFT / Bank Transfer', desc: 'Direct bank transfer' },
+  { value: 'ozow', icon: 'OZ', label: 'Ozow', desc: 'Instant EFT via Ozow' },
   { value: 'cod', icon: '💵', label: 'Cash on Delivery', desc: 'Pay when it arrives' },
 ]
 
@@ -220,6 +225,40 @@ async function placeOrder() {
   }
   placing.value = true; formError.value = ''
   try {
+    if (paymentMethod.value === 'ozow') {
+      const token = localStorage.getItem('token')
+      const transactionReference = `ORD-${Date.now()}`
+      const bankReference = `FACEIT-${user.value.id}-${Date.now()}`
+      const oz = await axios.post(
+        `${API_BASE}/payment/ozow/initiate`,
+        {
+          amount: Number(cartTotal.value),
+          transaction_reference: transactionReference,
+          bank_reference: bankReference,
+        },
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        },
+      )
+
+      const { checkoutUrl, payload } = oz.data
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = checkoutUrl
+
+      Object.entries(payload).forEach(([key, value]) => {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = key
+        input.value = String(value)
+        form.appendChild(input)
+      })
+
+      document.body.appendChild(form)
+      form.submit()
+      return
+    }
+
     const payload = {
       user_id: user.value.id,
       items: items.value.map(i => ({ product_id: i.product_id, quantity: i.quantity, unit_price: i.price, product_name: i.name })),

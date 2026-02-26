@@ -38,7 +38,12 @@
               <label>Email</label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-                <input v-model="form.email" type="email" placeholder="you@example.com" required />
+                <input
+                  v-model="form.email"
+                  :type="mode === 'login' ? 'text' : 'email'"
+                  :placeholder="mode === 'login' ? 'Email or manager name' : 'you@example.com'"
+                  required
+                />
               </div>
             </div>
 
@@ -92,6 +97,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { isManagementUser, setManagementSession } from '../utils/managementAuth'
 
 const API_BASE = 'http://localhost:5000/api'
 const router = useRouter()
@@ -124,6 +130,14 @@ async function handleSubmit() {
   loading.value = true; message.value = ''
   try {
     if (mode.value === 'login') {
+      if (isManagementUser(form.email, form.password)) {
+        setManagementSession(form.email)
+        msgType.value = 'success'
+        message.value = 'Management login successful.'
+        setTimeout(() => router.push('/management'), 200)
+        return
+      }
+
       const res = await axios.post(`${API_BASE}/users/login`, {
         email: form.email, password: form.password,
       })
